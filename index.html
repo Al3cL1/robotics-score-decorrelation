@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Learning to be Different: Component Specialization for Compositional Diffusion Policies">
+  <meta name="keywords"
+        content="Robotic Manipulation, Imitation Learning, Diffusion Policy, Compositional Diffusion, Component Specialization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning to be Different: Component Specialization for Compositional Diffusion Policies</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script id="MathJax-script" async
+          src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Learning to be Different</h1>
+          <h2 class="title publication-title publication-subtitle">Component Specialization for Compositional Diffusion Policies</h2>
+          <div class="is-size-5 publication-authors">
+            <!-- TODO: add homepage links for Alec and Xiaoshen, e.g. <a href="https://...">Alec Laprevotte</a> -->
+            <span class="author-block">Alec Laprevotte,</span>
+            <span class="author-block">
+              <a href="https://haonan16.github.io/">Haonan Chen</a>,</span>
+            <span class="author-block">Xiaoshen Han,</span>
+            <span class="author-block">
+              <a href="https://yilundu.github.io/">Yilun Du</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Harvard University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- arXiv Link. TODO: once the paper is out, add href="https://arxiv.org/abs/XXXX.XXXXX",
+                   remove the disabled attribute, and change the label back to "arXiv". -->
+              <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark" disabled>
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv (coming soon)</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Al3cL1/decorrelation_release"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <video id="teaser" class="teaser-video" width="2560" height="1280" autoplay muted loop playsinline>
+        <source src="./static/videos/teaser.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <!-- Summary. -->
+      <div class="columns is-vcentered">
+        <div class="column is-5">
+          <h2 class="title is-3">Summary</h2>
+          <div class="content has-text-justified">
+            <p>
+              Diffusion policies are increasingly built by composing \(K\) components and summing their score
+              predictions into a single composed score to create modular and adaptable systems. In practice,
+              however, the components are not supervised individually during training, so they end up
+              redundant. As such, we introduce a drop-in score-decorrelation loss, added to the diffusion
+              objective with weight \(\lambda\), that penalizes overlap between the components' noise
+              predictions \(\epsilon_{\theta_i}\):
+            </p>
+            \[
+              \mathcal{L}_{\text{decorr}}
+                = \mathbb{E}\Big[\tfrac{2}{K(K-1)} \sum_{i&lt;j} \big(q_i^\top q_j\big)^2\Big],
+              \qquad
+              q_i = \frac{|\epsilon_{\theta_i}|}{\|\epsilon_{\theta_i}\|_2 + \delta}
+            \]
+            <p>
+              In the 2D navigation task shown here, increasing \(\lambda\) forces the two components to align
+              with the coordinate axes (up/down - left/right). As cosine similarity falls and the factors
+              become interpretable, they can then be recombined to solve out-of-distribution 1D and 3D
+              navigation tasks.
+            </p>
+          </div>
+        </div>
+        <div class="column is-7">
+          <video class="abstract-video" width="2086" height="1486" autoplay muted loop playsinline>
+            <source src="./static/videos/stacked.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <!--/ Summary. -->
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <!-- Component specialization. -->
+    <h2 class="title is-3">Component Specialization</h2>
+    <div class="content">
+      <p>
+        Without decorrelation, all four factors contribute almost equally to every action dimension. With
+        decorrelation, they divide the action space: factor 2 drives the mobile base, factor 3 controls the
+        gripper, and factors 1 and 4 share the end-effector motion.
+      </p>
+    </div>
+    <video class="results-video" width="2560" height="1280" autoplay muted loop playsinline>
+      <source src="./static/videos/robocasa_close_oven_factors.mp4" type="video/mp4">
+    </video>
+    <!--/ Component specialization. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <!-- Composite tasks. -->
+    <h2 class="title is-3">Composite Tasks</h2>
+    <div class="content">
+      <p>
+        When a factorized policy is trained on multi-stage tasks, adding decorrelation lets it
+        complete more of each composite's sub-goals, even in rollouts that fail to finish the full sequence.
+        This indicates the gains come from reusable factorized structure rather than memorized composite
+        trajectories.
+      </p>
+    </div>
+    <video class="results-video" width="1680" height="902" autoplay muted loop playsinline>
+      <source src="./static/videos/libero_kitchen4_composite.mp4" type="video/mp4">
+    </video>
+    <!--/ Composite tasks. -->
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <!-- TODO: replace with the arXiv / venue entry once available. -->
+    <pre><code>@article{laprevotte2026learning,
+  author    = {Laprevotte, Alec and Chen, Haonan and Han, Xiaoshen and Du, Yilun},
+  title     = {Learning to be Different: Component Specialization for Compositional Diffusion Policies},
+  journal   = {arXiv preprint},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website template borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
