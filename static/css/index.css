@@ -176,8 +176,128 @@ mjx-container[display="true"] {
   font-size: 2.25rem;
 }
 
-/* Square teaser: cap its size so it doesn't fill the whole screen. */
-.teaser-video.teaser-square {
-  max-width: 640px;
-  margin: 0 auto;
+/* Interactive toy figure in the Summary. */
+.toy-demo {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+}
+.toy-plots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.toy-plot figcaption {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 600;
+  color: #141413;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+.toy-plot canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+.toy-slider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.toy-slider label {
+  min-width: 6.5em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.toy-slider input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  accent-color: #141413;
+}
+.toy-status {
+  margin-top: 0.5rem;
+  color: #7a7a7a;
+  font-size: 0.875rem;
+}
+.toy-ood[hidden] {
+  display: none;
+}
+.toy-plot.toy-ood {
+  margin-top: 1.25rem;
+}
+.toy-cube-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.toy-stack {
+  flex: 1 1 200px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.toy-copy figcaption {
+  font-size: 0.9rem;
+  color: #141413;
+  margin-bottom: 0.15rem;
+}
+canvas.toy-axis {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 2;
+}
+.toy-chip {
+  display: inline-block;
+  padding: 0 0.6em;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 600;
+}
+.toy-cube {
+  flex: 2 1 280px;
+  min-width: 0;
+}
+#toy-3d {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+.toy-success {
+  margin-top: 0.25rem;
+  text-align: center;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #87867f;
+  font-variant-numeric: tabular-nums;
+}
+.toy-success output {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-right: 0.15em;
+}
+.toy-ood figcaption output {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Summary text: larger and airier so it fills its column next to the interactive figure. */
+.summary-text {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  hyphens: auto;          /* evens out justified lines in the narrow column */
+}
+.nowrap {
+  white-space: nowrap;
+}
+.summary-text p:not(:last-child) {
+  margin-bottom: 1.25em;
+}
+.summary-text mjx-container[jax][display="true"] {
+  font-size: 0.889em;   /* keep the equation at its 16px size so it still fits the column */
+  margin: 3em 0;        /* beats MathJax's own 1em, which it injects after this stylesheet */
 }
